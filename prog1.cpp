@@ -106,15 +106,12 @@ void insert(struct TreeNode *&root, int to_insert){
 	if (root != nullptr){
 		if (to_insert < root->value){
 			insert(root->left_child, to_insert);
-			return;
 		}
 		else if (to_insert > root->value){
 			insert(root->right_child, to_insert);
-			return;
 		}
 		else{
 			std::cout << "Element already present\n";
-			return;
 		}
 	}
 	else{
@@ -132,6 +129,7 @@ int main(int argc, char** argv){
 	insert(new_node, -9);
 	insert(new_node, -10);
 	insert(new_node, -100);
+	insert(new_node, -10);
 	/*
 	pre_order(new_node);
 	insert(new_node, 15);
