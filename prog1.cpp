@@ -72,17 +72,28 @@ void remove(struct TreeNode *&root, int to_delete){
 				struct TreeNode *old_root = root;
 				root = root->right_child;
 				delete old_root;
+				return;
 			}
 			else if (has_left && !has_right){
 				struct TreeNode *old_root = root;
 				root = root->left_child;
 				delete old_root;
+				return;
 			}
 			else if (!has_left && !has_right){
 				delete root;
+				root = nullptr;
+				return;
 			}
 			else{
-				
+				struct TreeNode *right = root->right_child;
+				while(right->left_child != nullptr){
+					right = right->left_child;
+				}
+				std::swap(root->value, right->value);
+				struct TreeNode *old_node = right;
+				delete old_node;
+				return;
 			}
 			std::cout << "Element deleted\n";
 			return;
@@ -95,12 +106,15 @@ void insert(struct TreeNode *&root, int to_insert){
 	if (root != nullptr){
 		if (to_insert < root->value){
 			insert(root->left_child, to_insert);
+			return;
 		}
-		if (to_insert > root->value){
+		else if (to_insert > root->value){
 			insert(root->right_child, to_insert);
+			return;
 		}
 		else{
 			std::cout << "Element already present\n";
+			return;
 		}
 	}
 	else{
@@ -109,16 +123,20 @@ void insert(struct TreeNode *&root, int to_insert){
 		root->left_child = nullptr;
 		root->right_child = nullptr;
 		std::cout << "Element inserted\n";
+		return;
 	}
 }
 
 int main(int argc, char** argv){
 	struct TreeNode *new_node;
-	insert(new_node, 6);
-	insert(new_node, 7);
 	insert(new_node, -9);
-	insert(new_node, 0);
+	insert(new_node, -10);
+	insert(new_node, -100);
+	/*
 	pre_order(new_node);
-	access(new_node, 7);
+	insert(new_node, 15);
+	pre_order(new_node);
+	remove(new_node, -90);
+	pre_order(new_node);*/
 	return 0;
 }
