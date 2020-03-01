@@ -35,6 +35,22 @@ void pre_order(struct TreeNode *root){
     std::cout << "\n";
 }
 
+void access(struct TreeNode *&root, int to_find){
+	while (root != nullptr){
+		if (to_find < root->value){
+			root = root->left_child;
+		}
+		if (to_find > root->value){
+			root = root->right_child;
+		}
+		else{
+			std::cout << "Element accessed\n";
+			return;
+		}
+	}
+	std::cout << "Element not found\n";
+}
+
 void insert(struct TreeNode *&root, int to_insert){
 	if (root != nullptr){
 		if (to_insert < root->value){
@@ -56,6 +72,9 @@ int main(int argc, char** argv){
 	struct TreeNode *new_node;
 	insert(new_node, 6);
 	insert(new_node, 7);
+	insert(new_node, -9);
+	insert(new_node, 0);
 	pre_order(new_node);
+	access(new_node, 7);
 	return 0;
 }
