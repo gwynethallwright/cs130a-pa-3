@@ -52,12 +52,12 @@ void access(struct TreeNode *&root, int to_find){
 }
 
 void remove(struct TreeNode *&root, int to_delete){
-	while (root != nullptr){
+	if (root != nullptr){
 		if (to_delete < root->value){
-			root = root->left_child;
+			remove(root->left_child, to_delete);
 		}
-		if (to_delete > root->value){
-			root = root->right_child;
+		else if (to_delete > root->value){
+			remove(root->right_child, to_delete);
 		}
 		else{
 			bool has_right = 0;
@@ -68,21 +68,25 @@ void remove(struct TreeNode *&root, int to_delete){
 			if (root->left_child != nullptr){
 				has_left = 1;
 			}
-			if (has_right && !has_left){
+			if (has_right && (!has_left)){
 				struct TreeNode *old_root = root;
 				root = root->right_child;
 				delete old_root;
+				std::cout << "Element deleted\n";
 				return;
 			}
-			else if (has_left && !has_right){
+			else if (has_left && (!has_right)){
 				struct TreeNode *old_root = root;
 				root = root->left_child;
 				delete old_root;
+				std::cout << "Element deleted\n";
 				return;
 			}
-			else if (!has_left && !has_right){
-				delete root;
-				root = nullptr;
+			else if ((!has_left) && (!has_right)){
+				std::cout << "no kids\n";
+				struct TreeNode *old_root = root;
+				delete old_root;
+				std::cout << "Element deleted\n";
 				return;
 			}
 			else{
@@ -95,11 +99,11 @@ void remove(struct TreeNode *&root, int to_delete){
 				delete old_node;
 				return;
 			}
-			std::cout << "Element deleted\n";
-			return;
 		}
 	}
-	std::cout << "Element not found\n";
+	else{
+		std::cout << "Element not found\n";
+	}
 }
 
 void insert(struct TreeNode *&root, int to_insert){
@@ -127,14 +131,16 @@ void insert(struct TreeNode *&root, int to_insert){
 int main(int argc, char** argv){
 	struct TreeNode *new_node;
 	insert(new_node, -9);
+	pre_order(new_node);
 	insert(new_node, -10);
+	pre_order(new_node);
 	insert(new_node, -100);
+	insert(new_node, -99);
+	pre_order(new_node);
 	insert(new_node, -10);
-	/*
+	access(new_node, -9);
 	pre_order(new_node);
-	insert(new_node, 15);
+	remove(new_node, -100);
 	pre_order(new_node);
-	remove(new_node, -90);
-	pre_order(new_node);*/
 	return 0;
 }
