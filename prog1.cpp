@@ -59,12 +59,16 @@ void insert(struct TreeNode *&root, int to_insert){
 		if (to_insert > root->value){
 			insert(root->right_child, to_insert);
 		}
+		else{
+			std::cout << "Element already present\n";
+		}
 	}
 	else{
 		root = (struct TreeNode*) malloc(sizeof(struct TreeNode));
 		root->value = to_insert;
 		root->left_child = nullptr;
 		root->right_child = nullptr;
+		std::cout << "Element inserted\n";
 	}
 }
 
