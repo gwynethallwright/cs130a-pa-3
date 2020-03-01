@@ -36,6 +36,37 @@ void pre_order(struct TreeNode *root){
     std::cout << "\n";
 }
 
+void in_order(struct TreeNode *root){
+	if (root != nullptr){
+		std::stack <struct TreeNode *> to_print;
+		to_print.push(root);
+		while (!to_print.empty()){
+			root = to_print.top();
+			to_print.pop();
+			if ((root->left_child == nullptr) && (root->right_child == nullptr)){
+				std::cout << root->value << " ";
+			}
+			else{
+				struct TreeNode *root_node = (struct TreeNode*) malloc(sizeof(struct TreeNode));
+				root_node->value = root->value;
+				root_node->left_child = nullptr;
+				root_node->right_child = nullptr;
+				if (root->right_child != nullptr){
+					to_print.push(root->right_child);
+				}
+				to_print.push(root_node);
+				if (root->left_child != nullptr){
+					to_print.push(root->left_child);
+				}
+			}
+	    }
+	}
+	else{
+		std::cout << "Tree empty";
+	}
+    std::cout << "\n";
+}
+
 void access(struct TreeNode *&root, int to_find){
 	while (root != nullptr){
 		if (to_find < root->value){
@@ -113,7 +144,7 @@ void remove(struct TreeNode *&root, int to_delete){
 					right = right->left_child;
 				}
 				std::swap(root->value, right->value);
-				pre_order(root);
+				/*pre_order(root);*/
 				remove(root->right_child, right->value);
 				return;
 			}
@@ -157,8 +188,13 @@ int main(int argc, char** argv){
 	insert(new_node, new_node, 3);
 	insert(new_node, new_node, 5);
 	insert(new_node, new_node, 6);
+	insert(new_node, new_node, 9);
+	insert(new_node, new_node, 10);
+	insert(new_node, new_node, 11);
 	pre_order(new_node);
-	remove(new_node, 8);
+	in_order(new_node);
+	remove(new_node, 6);
 	pre_order(new_node);
+	in_order(new_node);
 	return 0;
 }
