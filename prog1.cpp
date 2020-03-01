@@ -40,7 +40,7 @@ void access(struct TreeNode *&root, int to_find){
 		if (to_find < root->value){
 			root = root->left_child;
 		}
-		if (to_find > root->value){
+		else if (to_find > root->value){
 			root = root->right_child;
 		}
 		else{
