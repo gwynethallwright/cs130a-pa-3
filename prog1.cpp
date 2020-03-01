@@ -51,6 +51,46 @@ void access(struct TreeNode *&root, int to_find){
 	std::cout << "Element not found\n";
 }
 
+void remove(struct TreeNode *&root, int to_delete){
+	while (root != nullptr){
+		if (to_delete < root->value){
+			root = root->left_child;
+		}
+		if (to_delete > root->value){
+			root = root->right_child;
+		}
+		else{
+			bool has_right = 0;
+			bool has_left = 0;
+			if (root->right_child != nullptr){
+				has_right = 1;
+			}
+			if (root->left_child != nullptr){
+				has_left = 1;
+			}
+			if (has_right && !has_left){
+				struct TreeNode *old_root = root;
+				root = root->right_child;
+				delete old_root;
+			}
+			else if (has_left && !has_right){
+				struct TreeNode *old_root = root;
+				root = root->left_child;
+				delete old_root;
+			}
+			else if (!has_left && !has_right){
+				delete root;
+			}
+			else{
+				
+			}
+			std::cout << "Element deleted\n";
+			return;
+		}
+	}
+	std::cout << "Element not found\n";
+}
+
 void insert(struct TreeNode *&root, int to_insert){
 	if (root != nullptr){
 		if (to_insert < root->value){
