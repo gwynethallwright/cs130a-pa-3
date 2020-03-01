@@ -67,6 +67,37 @@ void in_order(struct TreeNode *root){
     std::cout << "\n";
 }
 
+void post_order(struct TreeNode *root){
+	if (root != nullptr){
+		std::stack <struct TreeNode *> to_print;
+		to_print.push(root);
+		while (!to_print.empty()){
+			root = to_print.top();
+			to_print.pop();
+			if ((root->left_child == nullptr) && (root->right_child == nullptr)){
+				std::cout << root->value << " ";
+			}
+			else{
+				struct TreeNode *root_node = (struct TreeNode*) malloc(sizeof(struct TreeNode));
+				root_node->value = root->value;
+				root_node->left_child = nullptr;
+				root_node->right_child = nullptr;
+				to_print.push(root_node);
+				if (root->right_child != nullptr){
+					to_print.push(root->right_child);
+				}
+				if (root->left_child != nullptr){
+					to_print.push(root->left_child);
+				}
+			}
+	    }
+	}
+	else{
+		std::cout << "Tree empty";
+	}
+    std::cout << "\n";
+}
+
 void access(struct TreeNode *&root, int to_find){
 	while (root != nullptr){
 		if (to_find < root->value){
@@ -193,6 +224,7 @@ int main(int argc, char** argv){
 	insert(new_node, new_node, 11);
 	pre_order(new_node);
 	in_order(new_node);
+	post_order(new_node);
 	remove(new_node, 6);
 	pre_order(new_node);
 	in_order(new_node);
