@@ -236,6 +236,17 @@ void insert(struct TreeNode *&root, struct TreeNode *&prev, int to_insert){
 	}
 }
 
+void make_empty(TreeNode* t) {
+    if(t == nullptr)
+        return;
+    {
+        make_empty(t->left_child);
+        make_empty(t->right_child);
+        free(t);
+    }
+    return;
+}
+
 int main(int argc, char** argv){
 	static struct TreeNode *new_node;
 	std::string current;
