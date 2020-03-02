@@ -137,13 +137,13 @@ void access(struct TreeNode *root, int to_find){
 	std::cout << "Element not found\n";
 }
 
-void remove(struct TreeNode *&root, int to_delete){
+struct TreeNode* remove(struct TreeNode *root, int to_delete){
 	if (root != nullptr){
 		if (to_delete < root->value){
-			remove(root->left_child, to_delete);
+			root->left_child = remove(root->left_child, to_delete);
 		}
 		else if (to_delete > root->value){
-			remove(root->right_child, to_delete);
+			root->right_child = remove(root->right_child, to_delete);
 		}
 		else{
 			bool has_right = 0;
@@ -162,9 +162,8 @@ void remove(struct TreeNode *&root, int to_delete){
 				else{
 					prev->left_child = root->right_child;
 				}
-				free(root);
 				std::cout << "Element deleted\n";
-				return;
+				return root;
 			}
 			else if (has_left && (!has_right)){
 				struct TreeNode *prev = root->prev;
@@ -174,9 +173,8 @@ void remove(struct TreeNode *&root, int to_delete){
 				else{
 					prev->left_child = root->left_child;
 				}
-				free(root);
 				std::cout << "Element deleted\n";
-				return;
+				return root;
 			}
 			else if ((!has_left) && (!has_right)){
 				struct TreeNode *prev = root->prev;
@@ -186,9 +184,8 @@ void remove(struct TreeNode *&root, int to_delete){
 				else{
 					prev->left_child = nullptr;
 				}
-				free(root);
 				std::cout << "Element deleted\n";
-				return;
+				return root;
 			}
 			else{
 				struct TreeNode *right = root->right_child;
@@ -196,14 +193,15 @@ void remove(struct TreeNode *&root, int to_delete){
 					right = right->left_child;
 				}
 				std::swap(root->value, right->value);
-				remove(root->right_child, right->value);
-				return;
+				root->right_child = remove(root->right_child, right->value);
+				return root;
 			}
 		}
 	}
 	else{
 		std::cout << "Element not found\n";
 	}
+	return root;
 }
 
 void insert(struct TreeNode *&root, struct TreeNode *&prev, int to_insert){
@@ -251,7 +249,7 @@ int main(int argc, char** argv){
     	else if (current == "delete"){
     		iss >> argument;
     	    argument.pop_back();
-    		remove(new_node, std::atoi(argument.c_str()));
+    		new_node = remove(new_node, std::atoi(argument.c_str()));
     	}
     	else if (current == "print,"){
     		pre_order(new_node);
