@@ -233,23 +233,31 @@ void insert(struct TreeNode *&root, struct TreeNode *&prev, int to_insert){
 
 int main(int argc, char** argv){
 	static struct TreeNode *new_node;
-	insert(new_node, new_node, 7);
-	insert(new_node, new_node, 2);
-	insert(new_node, new_node, 8);
-	insert(new_node, new_node, 1);
-	insert(new_node, new_node, 4);
-	insert(new_node, new_node, 3);
-	insert(new_node, new_node, 5);
-	insert(new_node, new_node, 6);
-	insert(new_node, new_node, 9);
-	insert(new_node, new_node, 10);
-	insert(new_node, new_node, 11);
-	pre_order(new_node);
-	in_order(new_node);
-	post_order(new_node);
-	level_order(new_node);
-	remove(new_node, 6);
-	pre_order(new_node);
-	in_order(new_node);
-	return 0;
+	std::string current;
+	std::string argument;
+	std::string the_input = argv[1];
+	the_input += ",";
+	std::stringstream iss(the_input);
+	iss << current;
+    while (iss){
+    	if (current == "insert"){
+    	    iss >> argument;
+    	    argument.pop_back();
+    		insert(new_node, new_node, std::atoi(argument.c_str()));
+    	}
+    	else if (current == "access"){
+    	    iss >> argument;
+    	    argument.pop_back();
+    		access(new_node, std::atoi(argument.c_str()));
+    	}
+    	else if (current == "delete"){
+    		iss >> argument;
+    	    argument.pop_back();
+    		remove(new_node, std::atoi(argument.c_str()));
+    	}
+    	else if (current == "print," || current == "print"){
+    		level_order(new_node);
+    	}
+    	iss >> current;
+    }
 }
