@@ -168,7 +168,6 @@ void remove(struct TreeNode *&root, int to_delete){
 			}
 			else if (has_left && (!has_right)){
 				struct TreeNode *prev = root->prev;
-				std::cout << prev->value << "\n";
 				if (prev->right_child->value == to_delete){
 					prev->right_child = root->left_child;
 				}
