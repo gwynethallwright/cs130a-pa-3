@@ -32,7 +32,7 @@ void level_order(struct TreeNode *root){
 	    }
 	}
 	else{
-		std::cout << "Tree empty";
+		std::cout << "Empty tree";
 	}
     std::cout << "\n";
 }
@@ -54,7 +54,7 @@ void pre_order(struct TreeNode *root){
 	    }
 	}
 	else{
-		std::cout << "Tree empty";
+		std::cout << "Empty tree";
 	}
     std::cout << "\n";
 }
@@ -85,7 +85,7 @@ void in_order(struct TreeNode *root){
 	    }
 	}
 	else{
-		std::cout << "Tree empty";
+		std::cout << "Empty tree";
 	}
     std::cout << "\n";
 }
@@ -116,7 +116,7 @@ void post_order(struct TreeNode *root){
 	    }
 	}
 	else{
-		std::cout << "Tree empty";
+		std::cout << "Empty tree";
 	}
     std::cout << "\n";
 }
@@ -233,9 +233,14 @@ int main(int argc, char** argv){
     		new_node = remove(new_node, std::atoi(argument.c_str()));
     	}
     	else if (current == "print,"){
-    		pre_order(new_node);
-    		in_order(new_node);
-    		post_order(new_node);
+    		if (new_node == nullptr){
+    			std::cout << "Empty tree\n";
+    		}
+    		else{
+    			pre_order(new_node);
+    			in_order(new_node);
+    			post_order(new_node);
+    		}
     	}
     	else if (current == "print"){
     		iss >> argument;
