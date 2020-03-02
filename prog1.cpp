@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <stack>
+#include <queue>
 
 struct TreeNode{
 	int value;
@@ -13,6 +14,28 @@ struct TreeNode{
 	TreeNode *right_child;
 	TreeNode *prev;
 };
+
+void level_order(struct TreeNode *root){
+	if (root != nullptr){
+		std::queue <struct TreeNode *> to_print;
+		to_print.push(root);
+		while (!to_print.empty()){
+			root = to_print.front();
+			to_print.pop();
+			std::cout << root->value << " ";
+			if (root->left_child != nullptr){
+				to_print.push(root->left_child);
+			}
+			if (root->right_child != nullptr){
+				to_print.push(root->right_child);
+			}
+	    }
+	}
+	else{
+		std::cout << "Tree empty";
+	}
+    std::cout << "\n";
+}
 
 void pre_order(struct TreeNode *root){
 	if (root != nullptr){
@@ -175,7 +198,6 @@ void remove(struct TreeNode *&root, int to_delete){
 					right = right->left_child;
 				}
 				std::swap(root->value, right->value);
-				/*pre_order(root);*/
 				remove(root->right_child, right->value);
 				return;
 			}
@@ -225,6 +247,7 @@ int main(int argc, char** argv){
 	pre_order(new_node);
 	in_order(new_node);
 	post_order(new_node);
+	level_order(new_node);
 	remove(new_node, 6);
 	pre_order(new_node);
 	in_order(new_node);
