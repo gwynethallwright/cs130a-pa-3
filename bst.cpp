@@ -121,7 +121,7 @@ void post_order(struct TreeNode *root){
     std::cout << "\n";
 }
 
-void access(struct TreeNode *&root, int to_find){
+void access(struct TreeNode *root, int to_find){
 	while (root != nullptr){
 		if (to_find < root->value){
 			root = root->left_child;
@@ -266,5 +266,5 @@ int main(int argc, char** argv){
     	}
     	iss >> current;
     }
-    
+
 }
