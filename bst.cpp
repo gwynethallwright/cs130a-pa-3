@@ -213,13 +213,13 @@ struct TreeNode* remove(struct TreeNode *root, int to_delete){
 	return root;
 }
 
-void insert(struct TreeNode *&root, struct TreeNode *&prev, int to_insert){
+struct TreeNode* insert(struct TreeNode *root, int to_insert){
 	if (root != nullptr){
 		if (to_insert < root->value){
-			insert(root->left_child, root, to_insert);
+			root->left_child = insert(root->left_child, to_insert);
 		}
 		else if (to_insert > root->value){
-			insert(root->right_child, root, to_insert);
+			root->right_child = insert(root->right_child, to_insert);
 		}
 		else{
 			std::cout << "Element already present\n";
@@ -230,10 +230,9 @@ void insert(struct TreeNode *&root, struct TreeNode *&prev, int to_insert){
 		root->value = to_insert;
 		root->left_child = nullptr;
 		root->right_child = nullptr;
-		root->prev = prev;
 		std::cout << "Element inserted\n";
-		return;
 	}
+	return root;
 }
 
 void make_empty(TreeNode* t) {
@@ -259,7 +258,7 @@ int main(int argc, char** argv){
     	if (current == "insert"){
     	    iss >> argument;
     	    argument.pop_back();
-    		insert(new_node, new_node, std::atoi(argument.c_str()));
+    		new_node = insert(new_node, std::atoi(argument.c_str()));
     	}
     	else if (current == "access"){
     	    iss >> argument;
@@ -287,5 +286,5 @@ int main(int argc, char** argv){
     	}
     	iss >> current;
     }
-
+    make_empty(new_node);
 }
