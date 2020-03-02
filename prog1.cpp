@@ -255,7 +255,13 @@ int main(int argc, char** argv){
     	    argument.pop_back();
     		remove(new_node, std::atoi(argument.c_str()));
     	}
-    	else if (current == "print," || current == "print"){
+    	else if (current == "print,"){
+    		pre_order(new_node);
+    		in_order(new_node);
+    		post_order(new_node);
+    	}
+    	else if (current == "print"){
+    		iss >> argument;
     		level_order(new_node);
     	}
     	iss >> current;
