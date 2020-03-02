@@ -12,7 +12,6 @@ struct TreeNode{
 	int value;
 	TreeNode *left_child;
 	TreeNode *right_child;
-	TreeNode *prev;
 };
 
 void level_order(struct TreeNode *root){
