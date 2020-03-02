@@ -77,6 +77,7 @@ void in_order(struct TreeNode *root){
 	bool needs_space = 0;
 	if (root != nullptr){
 		std::stack <struct TreeNode *> to_print;
+		std::vector <struct TreeNode *> pointers_to_delete;
 		to_print.push(root);
 		while (!to_print.empty()){
 			root = to_print.top();
@@ -95,6 +96,7 @@ void in_order(struct TreeNode *root){
 				root_node->value = root->value;
 				root_node->left_child = nullptr;
 				root_node->right_child = nullptr;
+				pointers_to_delete.push_back(root_node);
 				if (root->right_child != nullptr){
 					to_print.push(root->right_child);
 				}
@@ -104,6 +106,9 @@ void in_order(struct TreeNode *root){
 				}
 			}
 	    }
+	    for (std::vector<struct TreeNode *>::iterator it = pointers_to_delete.begin(); it != pointers_to_delete.end(); ++it) {
+    		free(*it);
+		}
 	}
 	else{
 		std::cout << "Empty tree";
