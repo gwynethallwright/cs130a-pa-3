@@ -16,13 +16,20 @@ struct TreeNode{
 };
 
 void level_order(struct TreeNode *root){
+	bool needs_space = 0;
 	if (root != nullptr){
 		std::queue <struct TreeNode *> to_print;
 		to_print.push(root);
 		while (!to_print.empty()){
 			root = to_print.front();
 			to_print.pop();
-			std::cout << root->value << " ";
+			if (needs_space){
+				std::cout << " ";
+			}
+			std::cout << root->value;
+			if (!needs_space){
+				needs_space = 1;
+			}
 			if (root->left_child != nullptr){
 				to_print.push(root->left_child);
 			}
@@ -38,13 +45,20 @@ void level_order(struct TreeNode *root){
 }
 
 void pre_order(struct TreeNode *root){
+	bool needs_space = 0;
 	if (root != nullptr){
 		std::stack <struct TreeNode *> to_print;
 		to_print.push(root);
 		while (!to_print.empty()){
 			root = to_print.top();
 			to_print.pop();
-			std::cout << root->value << " ";
+			if (needs_space){
+				std::cout << " ";
+			}
+			std::cout << root->value;
+			if (!needs_space){
+				needs_space = 1;
+			}
 			if (root->right_child != nullptr){
 				to_print.push(root->right_child);
 			}
@@ -60,6 +74,7 @@ void pre_order(struct TreeNode *root){
 }
 
 void in_order(struct TreeNode *root){
+	bool needs_space = 0;
 	if (root != nullptr){
 		std::stack <struct TreeNode *> to_print;
 		to_print.push(root);
@@ -67,7 +82,13 @@ void in_order(struct TreeNode *root){
 			root = to_print.top();
 			to_print.pop();
 			if ((root->left_child == nullptr) && (root->right_child == nullptr)){
-				std::cout << root->value << " ";
+				if (needs_space){
+					std::cout << " ";
+				}
+				std::cout << root->value;
+				if (!needs_space){
+					needs_space = 1;
+				}
 			}
 			else{
 				struct TreeNode *root_node = (struct TreeNode*) malloc(sizeof(struct TreeNode));
@@ -91,6 +112,7 @@ void in_order(struct TreeNode *root){
 }
 
 void post_order(struct TreeNode *root){
+	bool needs_space = 0;
 	if (root != nullptr){
 		std::stack <struct TreeNode *> to_print;
 		to_print.push(root);
@@ -98,7 +120,13 @@ void post_order(struct TreeNode *root){
 			root = to_print.top();
 			to_print.pop();
 			if ((root->left_child == nullptr) && (root->right_child == nullptr)){
-				std::cout << root->value << " ";
+				if (needs_space){
+					std::cout << " ";
+				}
+				std::cout << root->value;
+				if (!needs_space){
+					needs_space = 1;
+				}
 			}
 			else{
 				struct TreeNode *root_node = (struct TreeNode*) malloc(sizeof(struct TreeNode));
