@@ -155,37 +155,18 @@ struct TreeNode* remove(struct TreeNode *root, int to_delete){
 				has_left = 1;
 			}
 			if (has_right && (!has_left)){
-				struct TreeNode *prev = root->prev;
-				if (prev->right_child->value == to_delete){
-					prev->right_child = root->right_child;
-				}
-				else{
-					prev->left_child = root->right_child;
-				}
-				std::cout << "Element deleted\n";
-				return root;
+				free(root);
+				return root->right_child;
 			}
 			else if (has_left && (!has_right)){
-				struct TreeNode *prev = root->prev;
-				if (prev->right_child->value == to_delete){
-					prev->right_child = root->left_child;
-				}
-				else{
-					prev->left_child = root->left_child;
-				}
 				std::cout << "Element deleted\n";
-				return root;
+				free(root);
+				return root->left_child;
 			}
 			else if ((!has_left) && (!has_right)){
-				struct TreeNode *prev = root->prev;
-				if (prev->right_child->value == to_delete){
-					prev->right_child = nullptr;
-				}
-				else{
-					prev->left_child = nullptr;
-				}
+				free(root);
 				std::cout << "Element deleted\n";
-				return root;
+				return nullptr;
 			}
 			else{
 				struct TreeNode *right = root->right_child;
