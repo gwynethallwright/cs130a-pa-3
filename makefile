@@ -1,3 +1,3 @@
-All: prog1.out
-prog1.out: prog1.cpp
-	g++ -std=c++17 -o prog1.out prog1.cpp
+All: bst.out
+bst.out: bst.cpp
+	g++ -std=c++17 -o bst.out bst.cpp
