@@ -178,57 +178,6 @@ void access(struct TreeNode *root, int to_find){
 	std::cout << "Element not found\n";
 }
 
-struct TreeNode* remove(struct TreeNode *root, int to_delete){
-	if (root != nullptr){
-		if (to_delete < root->value){
-			root->left_child = remove(root->left_child, to_delete);
-		}
-		else if (to_delete > root->value){
-			root->right_child = remove(root->right_child, to_delete);
-		}
-		else{
-			bool has_right = 0;
-			bool has_left = 0;
-			if (root->right_child != nullptr){
-				has_right = 1;
-			}
-			if (root->left_child != nullptr){
-				has_left = 1;
-			}
-			if (has_right && (!has_left)){
-				struct TreeNode* temp = root->right_child;
-				free(root);
-				std::cout << "Element deleted\n";
-				return temp;
-			}
-			else if (has_left && (!has_right)){
-				struct TreeNode* temp = root->left_child;
-				free(root);
-				std::cout << "Element deleted\n";
-				return temp;
-			}
-			else if ((!has_left) && (!has_right)){
-				free(root);
-				std::cout << "Element deleted\n";
-				return nullptr;
-			}
-			else{
-				struct TreeNode *right = root->right_child;
-				while(right->left_child != nullptr){
-					right = right->left_child;
-				}
-				std::swap(root->value, right->value);
-				root->right_child = remove(root->right_child, right->value);
-				return root;
-			}
-		}
-	}
-	else{
-		std::cout << "Element not found\n";
-	}
-	return root;
-}
-
 int height(struct TreeNode *root){
 	if (root == nullptr){
 		return -1;
@@ -292,6 +241,61 @@ struct TreeNode* balance(struct TreeNode *root, int max_diff){
 
 	}
 	update_height(root);
+	return root;
+}
+
+struct TreeNode* remove(struct TreeNode *root, int to_delete){
+	if (root != nullptr){
+		if (to_delete < root->value){
+			root->left_child = remove(root->left_child, to_delete);
+		}
+		else if (to_delete > root->value){
+			root->right_child = remove(root->right_child, to_delete);
+		}
+		else{
+			bool has_right = 0;
+			bool has_left = 0;
+			if (root->right_child != nullptr){
+				has_right = 1;
+			}
+			if (root->left_child != nullptr){
+				has_left = 1;
+			}
+			if (has_right && (!has_left)){
+				struct TreeNode* temp = root->right_child;
+				free(root);
+				std::cout << "Element deleted\n";
+				temp = balance(temp, 1);
+				return temp;
+			}
+			else if (has_left && (!has_right)){
+				struct TreeNode* temp = root->left_child;
+				free(root);
+				std::cout << "Element deleted\n";
+				temp = balance(temp, 1);
+				return temp;
+			}
+			else if ((!has_left) && (!has_right)){
+				free(root);
+				std::cout << "Element deleted\n";
+				return nullptr;
+			}
+			else{
+				struct TreeNode *right = root->right_child;
+				while(right->left_child != nullptr){
+					right = right->left_child;
+				}
+				std::swap(root->value, right->value);
+				root->right_child = remove(root->right_child, right->value);
+				root = balance(root, 1);
+				return root;
+			}
+		}
+	}
+	else{
+		std::cout << "Element not found\n";
+	}
+	root = balance(root, 1);
 	return root;
 }
 
