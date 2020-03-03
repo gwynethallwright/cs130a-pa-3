@@ -259,11 +259,15 @@ struct TreeNode* single_rotate_right(struct TreeNode *root){
 }
 
 struct TreeNode* double_rotate_left(struct TreeNode *root){
-
+	root->left_child = single_rotate_right(root->left_child);
+	root = single_rotate_left(root);
+	return root;
 }
 
 struct TreeNode* double_rotate_right(struct TreeNode *root){
-
+	root->right_child = single_rotate_left(root->right_child);
+	root = single_rotate_right(root);
+	return root;
 }
 
 struct TreeNode* balance(struct TreeNode *root, int max_diff){
