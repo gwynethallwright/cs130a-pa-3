@@ -236,7 +236,7 @@ int height(struct TreeNode *root){
 	return root->height;
 }
 
-void update_height(struct TreeNode *root){
+void update_height(struct TreeNode *&root){
 	root->height = std::max(height(root->left_child), height(root->right_child)) + 1;
 }
 
@@ -315,7 +315,7 @@ struct TreeNode* insert(struct TreeNode *root, int to_insert){
 		root->right_child = nullptr;
 		std::cout << "Element inserted\n";
 	}
-	root = balance(root, 2);
+	root = balance(root, 1);
 	return root;
 }
 
